@@ -1,0 +1,51 @@
+Rank,Airport 1,Airport 2,Distance (km),2018[1],2017[2],Type
+1,Jeju,Seoul-Gimpo,449,"14,107,414","13,460,306",Domestic
+2,Sapporo,Tokyo-Haneda,835,"9,698,639","8,726,502",Domestic
+3,Sydney,Melbourne,705,"9,245,392","9,090,941",Domestic
+4,Fukuoka,Tokyo-Haneda,889,"8,762,547","7,864,000",Domestic
+5,Mumbai,Delhi,1150,"7,392,155","7,129,943",Domestic
+6,Hanoi,Ho Chi Minh City,1171,"6,867,114","6,769,823",Domestic
+7,Beijing,Shanghai-Hongqiao,1081,"6,518,997","6,833,684",Domestic
+8,Hong Kong,Taipei-Taoyuan,802,"6,476,268","6,719,030",International
+9,Tokyo-Haneda,Naha,1573,"5,829,712","5,269,481",Domestic
+10,Jakarta,Surabaya,700,"5,649,046","5,271,304",Domestic
+11,Jakarta,Denpasar,991,"5,535,108","4,952,852",Domestic
+12,Jeddah,Riyadh,857,"5,526,110","5,091,629",Domestic
+13,Tokyo-Haneda,Osaka-Itami,407,"5,131,757","5,106,584",Domestic
+14,Chengdu,Beijing,1559,"5,092,442","4,951,620",Domestic
+15,Guangzhou,Beijing,1898,"5,076,229","4,864,177",Domestic
+16,Cancun,Mexico City,1294,"4,885,602","4,656,308",Domestic
+17,Beijing,Shenzhen,1979,"4,853,038","4,496,351",Domestic
+18,Brisbane,Sydney,756,"4,815,609","4,742,771",Domestic
+19,Jakarta,Singapore,896,"4,812,342","4,810,602",International
+20,Guangzhou,Shanghai-Hongqiao,1176,"4,724,514","4,469,990",Domestic
+21,Shanghai-Hongqiao,Shenzhen,1217,"4,679,294","4,445,654",Domestic
+22,Bangalore,Delhi,1717,"4,542,638","4,183,799",Domestic
+23,Jakarta,Makassar,1439,"4,530,428","4,559,737",Domestic
+24,Jakarta,Medan,1401,"4,512,830","3,886,963",Domestic
+25,Cape Town,Johannesburg,1292,"4,508,214","4,698,849",Domestic
+26,Kuala Lumpur,Singapore,296,"4,490,463","4,108,824",International
+27,São Paulo–Congonhas,Rio de Janeiro-Santos Dumont,378,"4,234,631","4,096,193",Domestic
+28,Hong Kong,Shanghai-Pudong,1247,"4,053,909","4,162,347",International
+29,New York-JFK,Los Angeles,3982,"3,971,922","3,531,613",Domestic
+30,Bogotá,Medellin-Rionegro,239,"3,930,332","3,323,127",Domestic
+31,Bangalore,Mumbai,834,"3,814,494","3,445,315",Domestic
+32,Los Angeles,San Francisco,541,"3,635,655","3,507,702",Domestic
+33,Bangkok-Suvarnabhumi,Phuket,685,"3,612,373","3,396,189",Domestic
+34,Brisbane,Melbourne,1379,"3,565,266","3,545,156",Domestic
+35,Cebu,Manila,570,"3,519,525","3,233,871",Domestic
+36,Hong Kong,Bangkok-Suvarnabhumi,1694,"3,490,988","3,438,628",International
+37,Mexico City,Monterrey,729,"3,474,971","3,202,091",Domestic
+38,Kolkata,Delhi,1333,"3,431,999","3,153,548",Domestic
+39,Da Nang,Ho Chi Minh City,617,"3,256,718","3,210,368",Domestic
+40,Chiang Mai,Bangkok-Don Mueang,569,"3,212,124","3,155,528",Domestic
+41,Seoul-Incheon,Osaka-Kansai,872,"3,210,813","2,907,199",International
+42,Cusco,Lima,583,"3,201,414","3,000,513",Domestic
+43,New York-LaGuardia,Chicago-O'Hare,1177,"3,198,700","3,118,651",Domestic
+44,Jakarta,Kuala Lumpur,1142,"3,170,193","2,812,479",International
+45,Mexico City,Guadalajara,466,"3,170,177","2,996,806",Domestic
+46,Jeju,Gimhae,294,"3,106,224","2,793,383",Domestic
+47,İzmir,Istanbul-Atatürk,348,"3,084,250","3,496,438",Domestic
+48,Hong Kong,Seoul-Incheon,2080,"3,081,942","3,198,132",International
+49,Guangzhou,Chengdu,1232,"3,044,038","2,944,642",Domestic
+50,Hong Kong,Manila,1145,"3,008,842","2,907,228",International

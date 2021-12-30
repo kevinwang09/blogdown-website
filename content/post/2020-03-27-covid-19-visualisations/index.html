@@ -1,0 +1,73 @@
+---
+title: COVID-19 visualisations
+author: Kevin Wang
+date: '2020-03-27'
+slug: covid-19-visualisations
+categories: []
+tags:
+  - datavis
+  - shiny
+subtitle: ''
+summary: ''
+authors: []
+lastmod: '2020-03-27T21:21:50+11:00'
+featured: no
+image:
+  caption: ''
+  focal_point: ''
+  preview_only: no
+projects: []
+---
+
+<script src="{{< blogdown/postref >}}index_files/header-attrs/header-attrs.js"></script>
+
+
+<div id="introduction" class="section level1">
+<h1>Introduction</h1>
+<p>The recent COVID-19 outbreak has caused much disruptions to people’s daily lives. As the policy of self-isolation gets adopted by many countries around the world, many people took to social media to share important resources and data visualisation illustrating the severity of COVID-19.
+I want to quite clear about my intentions behind this blog post: I am <strong>not</strong> an epidemiologist/biologist/medical doctor. I will refrain from making any inferences from this data (ironic for a statistician) because it would be irresponsible for me to make commentaries on an ongoing public health crisis in which I am not an expert on. I am only here to show you some interesting R coding and data visualisations.</p>
+<p>Between mid-February 2020 and mid-March 2020, I was in Cornell University (New York state) and observing the spread of COVID-19 quite closely. I was increasingly worried about the dramatic increase in the number of cases in US and the potential shutdown of the Australian border. I was on the brink of re-booking all my flights before it is too late. It is around the same time that I was asked by my supervisor back in Australia to design a lecture in Shiny apps, so I thought it will be useful for me to write an app and other visualisations to answer the following questions:</p>
+<ol style="list-style-type: decimal">
+<li>What do the confirmed cases for each country looks like? What is the days-lagged in confirmed cases for each compare when compare to China (i.e. cross-correlation)?</li>
+<li>What are the Sydney-bound flights that had confirmed cases? Is there a route that is safer than others?</li>
+</ol>
+</div>
+<div id="shiny-app-for-confirmed-cases-and-added-cases" class="section level1">
+<h1>Shiny app for confirmed cases and added cases</h1>
+<p><img src="/img/covid19_shiny.png" align="center" width="600" /></p>
+<p>This app attemps to answer the first question, code: <a href="https://github.com/kevinwang09/covid19" class="uri">https://github.com/kevinwang09/covid19</a>. I can’t afford a server at this point, so you will need to run this app locally by reading through the instructions in the README of that repo.</p>
+<p>Based on my simple visualisations at the time (~15 March 2020), I estimated that US’s major outbreak lags behind that of China by about 45 days or so. So it wasn’t so dangerous for me when I was in Cornell around mid-March, however, it was definitely not ideal as the county I was in already had two confirmed cases. Any delays in my departure could spell trouble. This is unfortunately true since at the time of writing, US has overtaken China in confirmed cases and New York state shares the biggest percentage of those confirmed cases.</p>
+<p>The structure of the app is quite simple:</p>
+<ul>
+<li>The COVID-19 data is fetched using the <a href="https://github.com/GuangchuangYu/nCov2019">nCov2019</a> package using this line of code <a href="https://github.com/kevinwang09/covid19/blob/885f7ba905d75fbf8bb070affaef20c6beb840af/global.R#L6">here</a></li>
+<li>Cumulative confirmed cases are extracted <a href="https://github.com/kevinwang09/covid19/blob/885f7ba905d75fbf8bb070affaef20c6beb840af/server.R#L3">here</a> and time series plot is made <a href="https://github.com/kevinwang09/covid19/blob/885f7ba905d75fbf8bb070affaef20c6beb840af/server.R#L34">here</a> and the cross-correlation plot is made <a href="https://github.com/kevinwang09/covid19/blob/885f7ba905d75fbf8bb070affaef20c6beb840af/server.R#L107">here</a>.</li>
+<li>Similarly, the plots for added cases are <a href="https://github.com/kevinwang09/covid19/blob/885f7ba905d75fbf8bb070affaef20c6beb840af/server.R#L66">here</a> and <a href="https://github.com/kevinwang09/covid19/blob/885f7ba905d75fbf8bb070affaef20c6beb840af/server.R#L96">here</a>.</li>
+</ul>
+</div>
+<div id="interactive-animation-of-flights-with-confirmed-case" class="section level1">
+<h1>Interactive animation of flights with confirmed case</h1>
+<p><img src="/img/covid19_flights.gif" align="center" width="600" /></p>
+<p>This is a standalone RMarkdown document: <a href="https://kevinwang09.github.io/covid19/confirmed_flights.html#5_plotly_visualisations" class="uri">https://kevinwang09.github.io/covid19/confirmed_flights.html#5_plotly_visualisations</a>.</p>
+<p>The New South Wales Health website publishes a <a href="https://www.health.nsw.gov.au/Infectious/diseases/Pages/coronavirus-flights.aspx">list of flights with confirmed cases of COVID-19</a>.</p>
+<p>The coding beind this visualisation is also quite straight-forward:</p>
+<ul>
+<li>The data are scrapped from the NSW Health website using the <code>xml2</code> and <code>rvest</code> packages. I particularly like the elegance of the coding style using tidyver to scrap this data, though some inspiration came from <a href="https://stackoverflow.com/a/52863929">this StackOverflow thread</a></li>
+</ul>
+<pre><code>url = &quot;https://www.health.nsw.gov.au/Infectious/diseases/Pages/coronavirus-flights.aspx&quot;
+raw = xml2::read_html(url)
+
+raw_flights_tbl = raw %&gt;%
+  rvest::html_node(xpath = &quot;.//div[@id=&#39;ctl00_PlaceHolderMain_contentc1__ControlWrapper_RichHtmlField&#39;]/table&quot;) %&gt;%
+  rvest::html_table() %&gt;% 
+  as_tibble() %&gt;% 
+  janitor::clean_names()</code></pre>
+<ul>
+<li>The geographical locations are then queried through Google Maps API for their longitude and latitudes.</li>
+</ul>
+<pre><code>all_geocode = tibble(
+  location = c(flights_tbl$origin, flights_tbl$destination) %&gt;% unique,
+  geocode = purrr::map(location, ggmap::geocode))</code></pre>
+<ul>
+<li>After grabbing these data, it is time to make plots using <a href="https://github.com/kevinwang09/covid19/blob/885f7ba905d75fbf8bb070affaef20c6beb840af/confirmed_flights.Rmd#L129">this chunk of code</a>. Althought a lot of small adjustments were needed, but this <a href="https://plotly.com/r/lines-on-maps/#flight-paths-map">example from Plotly’s official website</a> was quite helpful.</li>
+</ul>
+</div>
