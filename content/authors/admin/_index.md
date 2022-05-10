@@ -14,7 +14,7 @@ interests:
 - Data science
 - Statistics
 - Bioinformatics
-- R package development
+- R/Python package development
 organizations:
 - name: Illumina
   url: https://www.illumina.com/
