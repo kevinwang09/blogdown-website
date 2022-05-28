@@ -19,6 +19,6 @@ main:
   - name: Publications
     url: 'https://scholar.google.com/citations?user=ScxpjTgAAAAJ&hl=en'
     weight: 50
-  - name: Academic
+  - name: Academic Activities
     url: '/academic_activities'
     weight: 60

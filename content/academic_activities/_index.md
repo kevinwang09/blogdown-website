@@ -32,8 +32,6 @@ I have designed and hosted a series of Cloud-based workshops on the topics of:
 
 ### As an administrator
 
-I helped to organise the following workshops:
-
 + [HiC analytics at Bioinformatics Summer 2019](https://github.com/ycao6928/testASMI)
 + [Phosphoproteomic data analytics at Bioinformatics Summer 2019](https://github.com/SydneyBioX/BIS2019_PhosR)
 
@@ -113,8 +111,8 @@ I was fortunate enough to attend and gave talks at the following conferences as 
 + 2017 International Conference In Robust Statistics 
 + 2016 Australian Statistical Conference
 
-# Community {#community}
+# Community Services {#community}
 
-As of 2021, I am the Communication Officer for the [Statistical Society of Australia Victorian Branch](https://www.statsoc.org.au/Victoria). I am responsible for the social media accounts and email communications for the Branch. I also sit on the Events and Scholarship committees. 
+I have served on the Council of the Statistical Society of Australia NSW (in 2022) and Victorian Branch (in 2021). I was responsible for managing social media accounts, email communications and organising workshops and network events. 
 
-During my undergraduate and postgraduate studies, I held various positions at the [Sydney University Mathematics Society](https://usydsums.wordpress.com/) and [Sydney University Statistics Society](https://www.facebook.com/USYDStatSoc/), including the executive President position. I was an active contributor for the outreach programs at the University of Sydney. Since 2014, I have given various talks about mathematics to high school students. My most recent talk can be found here: https://kevinwang09.github.io/brussel_sprouts/. 
+During my undergraduate and postgraduate studies, I held various positions at the [Sydney University Mathematics Society](https://usydsums.org/) and [Sydney University Statistics Society](https://www.facebook.com/USYDStatSoc/), including the executive President position. I was an active contributor for the outreach programs at the University of Sydney. Since 2014, I have given various talks about mathematics to high school students. My most recent talk can be found here: https://kevinwang09.github.io/brussel_sprouts/. 
