@@ -6,7 +6,6 @@ if [ "$(pwd)" ==  "$source_code_repo" ]
 then
   echo "Local blogdown path was verified, proceeding to update procedures."
   cd $source_code_repo
-  git commit -m $1
   echo "Pushing source code to kevinwangstats"
   git push kws master
   echo "Pushing source code to kevinwang09"

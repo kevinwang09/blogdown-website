@@ -5,6 +5,6 @@ This is a repo for constructing the https://www.kevinwangstats.com/ website. Onl
 # Instructions (only works on my pre-configured MacBook laptop)
 
 1. Make relevant edits in the `blogdown-website` repo. 
-2. `git add` whatever files that need to be git-tracked or updated. This step was designed to be the only manual step to avoid any accidental changes of the repo and the website. 
-3. `cd /Users/kevinwang/GitHub/kevinwangstats-blogdown-website` and run `bash update_site.sh some_commit_message`.
-4. The script will verify the local paths and push the website source codes. Then, a R session will be invoked to build the blogdown site, which populates the `public` folder. Then the built webpages will be pushed. Note that any edits will be pushed to both of my GitHub accounts, `kevinwangstats` and `kevinwang09`; this includes both the source code and the built webpages. 
+2. `git add` and `git commit` files that need to be git-tracked or updated. This step was designed to be the only manual step to avoid any accidental changes of the repo and the website. 
+3. `cd /Users/kevinwang/GitHub/kevinwangstats-blogdown-website` and run `bash update_site.sh`.
+4. The script will verify the local paths and push the website source codes. Then, a `R` session will be invoked to build the blogdown site, which populates the `public` folder. Then the built webpages will be pushed. Note that any edits will be pushed to both of my GitHub accounts, `kevinwangstats` and `kevinwang09`; this includes both the source code and the built webpages. 
