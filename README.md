@@ -1,11 +1,10 @@
 # Introduction
 
-This is a repo for constructing the https://www.kevinwangstats.com/ website. Only source codes are stored in this repo, with the serving site being https://github.com/kevinwangstats/netlify_site. 
+This is a repo for constructing the https://www.kevinwangstats.com/ website. Only source codes are stored in this repo, with the serving site being https://github.com/kevinwangstats/netlify_site. Due to some legacy issues, I will use https://github.com/kevinwangstats/blogdown-website as the main way to construct my website, while https://github.com/kevinwang09/blogdown-website hosts identical copy of the source code. 
 
-# Instructions 
+# Instructions (only works on my pre-configured MacBook laptop)
 
-1. Edit the website contents and settings.
-2. Run `blogdown::build_site()` to build the site into the `public` subfolder, which contains all the html files.  
-3. `git add`, `commit` and `push` the `public` folder to the GitHub repo `kevinwangstats/netlify_site`. This triggers the website updates in Netlify. 
-4. `git add`, `commit` and `push` the source code to the GitHub repo `kevinwangstats/blogdown-website`. This git-tracks the source code for the website. 
-
+1. Make relevant edits in the `blogdown-website` repo. 
+2. `git add` whatever files that need to be git-tracked or updated. This step was designed to be the only manual step to avoid any accidental changes of the repo and the website. 
+3. `cd /Users/kevinwang/GitHub/kevinwangstats-blogdown-website` and run `bash update_site.sh some_commit_message`.
+4. The script will verify the local paths and push the website source codes. Then, a R session will be invoked to build the blogdown site, which populates the `public` folder. Then the built webpages will be pushed. Note that any edits will be pushed to both of my GitHub accounts, `kevinwangstats` and `kevinwang09`; this includes both the source code and the built webpages. 
