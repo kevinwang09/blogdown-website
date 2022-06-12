@@ -11,7 +11,7 @@ external_link: "https://kevinwang09.github.io/tidytuesday"
 #   url: https://twitter.com/georgecushen
 # slides: example
 summary: Weekly data project from R For Data Science
-title: Tidytuesday
+title: tidytuesday
 url_code: ""
 url_pdf: ""
 url_slides: ""
