@@ -40,7 +40,7 @@ social:
   link: https://www.linkedin.com/in/kevinwangstats/
 - icon: cv
   icon_pack: ai
-  link: https://github.com/kevinwang09/cv/raw/master/CV_KEVIN_YX_WANG_long.pdf
+  link: https://github.com/kevinwang09/cv/raw/master/CV_KEVIN_YX_WANG_twopage.pdf?raw=true
 superuser: true
 title: Kevin Y.X. Wang
 ---
@@ -51,4 +51,4 @@ I am active on [Twitter](https://twitter.com/KevinWangStats), always posting my 
 
 I hold a PhD in statistics from the University of Sydney and worked as a research associate in 2019 and a statistician at CSL Behring in 2020. My research work focused on developing bioinformatics methods to enable prediction of patient clinical outcomes using omics data. In addition, I provided consultation and analytical insights to clinicians/biologists through numerous [collaborative publications](https://scholar.google.com/citations?user=ScxpjTgAAAAJ&hl=en). I was a Postgraduate Teaching Fellow at the University of Sydney (2016-2019) and a contributor to the outreach program at the University with a strong record in [workshops & seminars](/workshop/).
 
-{{< icon name="download" pack="fas" >}} Download my {{< staticref "https://github.com/kevinwang09/cv/raw/master/CV_KEVIN_YX_WANG_long.pdf" "newtab" >}}CV{{< /staticref >}}.
+{{< icon name="download" pack="fas" >}} Download my {{< staticref "https://github.com/kevinwang09/cv/raw/master/CV_KEVIN_YX_WANG_twopage.pdf" "newtab" >}}CV{{< /staticref >}}.
