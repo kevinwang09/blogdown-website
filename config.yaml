@@ -6,7 +6,7 @@ theme: "github.com"
 # This file is formatted using YAML syntax - learn more at https://learnxinyminutes.com/docs/yaml/
 
 title: Kevin Wang # Website name
-baseurl: 'http://www.kevinwangstats.com/' # Website URL
+baseurl: 'https://www.kevinwangstats.com/' # Website URL
 copyright: '' # Footer text, e.g. '© {year} Me'
 
 ############################
