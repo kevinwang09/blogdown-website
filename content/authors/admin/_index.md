@@ -1,5 +1,5 @@
 ---
-bio: Data scientist at Illumina. PhD in Statistics.
+bio: Senior Data scientist at Illumina. PhD in Statistics.
 education:
   courses:
   - course: PhD in Statistics and Bioinformatics
@@ -45,10 +45,10 @@ superuser: true
 title: Kevin Y.X. Wang
 ---
 
-As a kid, I was always fascinated with detective stories, and how one can make inferences on human behaviours based on simple observations and scientific principles. Today, I am a bioinformatics scientist at Illumina. In my day-to-day work, I use my statistical and data science skills to unravel complex variations to improve our understanding of biology and diseases. I love examining data, proposing hypotheses and making my data tell interesting and unexpected stories about the world we live in.
+As a kid, I was always fascinated with detective stories, and how one can make inferences on human behaviours based on simple observations and scientific principles. 
 
-I am active on [Twitter](https://twitter.com/KevinWangStats), always posting my analytical adventures and technical tips. I also release some of my analytical work through [GitHub](https://github.com/kevinwang09) and [tidytuesday](https://kevinwang09.github.io/tidytuesday/) webpage. My broad interest is in developing and applying statistical tools to understand complex data. My general specialisation is in applied statistics, data science and statistical package development in R and tidyverse.
+Today, I am a senior bioinformatics scientist at Illumina. In my day-to-day work, I utilise my statistical and data science skills to break down complex biological processes, leading to a greater understanding of human diseases. This understanding ultimately results in the creation of high-impact commercial products that improve patient care and contribute to our collective knowledge of human genomics. I am currently serving on the {{< staticref "https://www.linkedin.com/in/kevinwangstats" "newtab" >}}council{{< /staticref >}} of the NSW branch of the Statistical Society of Australia. 
 
-I hold a PhD in statistics from the University of Sydney and worked as a research associate in 2019 and a statistician at CSL Behring in 2020. My research work focused on developing bioinformatics methods to enable prediction of patient clinical outcomes using omics data. In addition, I provided consultation and analytical insights to clinicians/biologists through numerous [collaborative publications](https://scholar.google.com/citations?user=ScxpjTgAAAAJ&hl=en). I was a Postgraduate Teaching Fellow at the University of Sydney (2016-2019) and a contributor to the outreach program at the University with a strong record in [workshops & seminars](/workshop/).
+To me, data is like a static lake of information and data science is using clever strategies to fish actionable insights from that lake. Thus, my broad interest is in applying fit-for-purpose statistical and computational tools to understand complex data and make them tell interesting stories. I am active on [Twitter](https://twitter.com/KevinWangStats), always posting my analytical adventures and technical tips. I also release some of my analytical work through [GitHub](https://github.com/kevinwang09) and [tidytuesday](https://kevinwang09.github.io/tidytuesday/) webpage.
 
-{{< icon name="download" pack="fas" >}} Download my {{< staticref "https://docs.google.com/viewer?url=https://github.com/kevinwang09/cv/raw/master/CV_KEVIN_YX_WANG_twopage.pdf" "newtab" >}}CV{{< /staticref >}}.
+I hold a PhD in statistics from the University of Sydney and worked as a research associate in 2019 and a statistician at CSL Behring in 2020. Previously, I provided consultation and analytical insights to clinicians/biologists through numerous [collaborative publications](https://scholar.google.com/citations?user=ScxpjTgAAAAJ&hl=en). I was a Postgraduate Teaching Fellow at the University of Sydney (2016-2019) and a contributor to the outreach program at the University. You can reach out via my {{< staticref "https://www.linkedin.com/in/kevinwangstats" "newtab" >}}LinkedIn{{< /staticref >}} or download my {{< staticref "https://docs.google.com/viewer?url=https://github.com/kevinwang09/cv/raw/master/CV_KEVIN_YX_WANG_twopage.pdf" "newtab" >}} CV {{< /staticref >}}.
