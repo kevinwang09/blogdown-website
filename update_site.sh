@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source_code_repo=/Users/kevinwang/GitHub/kevinwangstats-blogdown-website
+source_code_repo=/Users/kevinwang/projects/kevinwangstats-blogdown-website
 
 if [ "$(pwd)" ==  "$source_code_repo" ]
 then
