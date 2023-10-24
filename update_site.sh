@@ -19,6 +19,8 @@ then
   git push kw9 master
   echo "Pushing source code to kevinwangstats"
   cd $source_code_repo
+  git add -A
+  git commit -m "Update website"
   git push kws master
   echo "Pushing source code to kevinwang09"
   git push kw9 master
