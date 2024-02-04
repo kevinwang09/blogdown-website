@@ -11,14 +11,13 @@ education:
 email: ""
 highlight_name: false
 interests:
-- Data science
-- Statistics
-- Bioinformatics
+- Data science to solve real world challenges
+- Bioinformatics for diagnostic technologies
 - R/Python package development
 organizations:
 - name: Illumina
   url: https://www.illumina.com/
-role: Data Scientist
+role: Senior Data Scientist
 social:
 - icon: envelope
   icon_pack: fas
@@ -40,7 +39,7 @@ social:
   link: https://www.linkedin.com/in/kevinwangstats/
 - icon: cv
   icon_pack: ai
-  link: https://github.com/kevinwang09/cv/raw/master/CV_KEVIN_YX_WANG_twopage.pdf
+  link: https://github.com/kevinwangstats/cv/blob/main/CV_KEVIN_YX_WANG_twopage.pdf
 superuser: true
 title: Kevin Y.X. Wang
 ---
