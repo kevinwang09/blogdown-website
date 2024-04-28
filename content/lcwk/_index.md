@@ -261,3 +261,12 @@ type: page
 伴我度过这些最黑暗和无聊时光的，还是李健的歌声。今天他发了一首新歌《万物安生》。初听之下，并无任何闪光点。但是就跟他的新专辑一样，越听越好听，越能让我发觉朴素的歌词里隐藏的平凡智慧。我希望有一天，我也能拥有这种对待生活的淡然的态度。昨天的消息，对我还是有一种打击，也是一种催促。让我加快脚步去和我想爱的人去体验那我想要的生活。
 
 <iframe src="//player.bilibili.com/player.html?aid=807564621&bvid=BV1d34y167Hn&cid=468113772&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>
+
+---
+
+28 Apr 2024
+
+感情没什么好说的，因为爱自由天意，好的婚姻让人如虎添翼
+
+<iframe src="//player.bilibili.com/video/BV1ja411u7Wz/?share_source=copy_web&vd_source=452646166a5e329cec4d1ec7224176a7
+" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>
