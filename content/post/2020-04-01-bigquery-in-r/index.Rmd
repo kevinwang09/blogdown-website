@@ -1,0 +1,265 @@
+---
+title: BigQuery in R
+author: Kevin Wang
+date: '2020-04-01'
+slug: bigquery-in-r
+categories: []
+tags:
+  - GCP
+  - Cloud
+subtitle: ''
+summary: ''
+authors: []
+lastmod: '2020-04-01T21:53:16+11:00'
+featured: no
+image:
+  caption: ''
+  focal_point: ''
+  preview_only: no
+projects: []
+---
+
+# Motivation
+
+Stranded at home due to COVID-19, I am trying to pick up SQL and Google's BigQuery as new skills. Even though the learning curve has been okay, I can't help to think how easy (and fast!) it was for me to use `dplyr` to do exactly the same operations. 
+
+The purpose of this post is to document some SQL against `dplyr`, or more precisely, `dbplyr` ([`dplyr` verbs on a database](https://cran.r-project.org/web/packages/dbplyr/vignettes/dbplyr.html), don't ask, it is magic!) to query COVID-19 data from [BigQuery](https://cloud.google.com/bigquery). 
+
+The main part of the article starts [here](#main), if you want to skip over [using BigQuery in the command line](#bq_command).
+
+Overall, I think `dplyr` offers a more modern syntax. But then, of course, I am very biased towards anything that comes out of tidyverse and keep in mind that `dplyr` is about 40 years later than SQL and probably borrowed a lot of strength from it. 
+
+## What you need
+
++ A Google Cloud account. See [here](https://cloud.google.com/sdk/docs/quickstarts) for some resources and set it up with an appropriate project
++ R packages: `dplyr`, `bigrquery`, `DBI`
++ Command line tools from Google Cloud
+
+## Why GCP/BigQuery?
+
+~~Well, Google gave me lots of free credits. I am easily bought.~~
+
+Jokes aside, I find the GCP documentation to be quite well-written and always up-to-date. Plus, the documentation contains lots examples of how to link the queried data to [data studio](https://cloud.google.com/bigquery/docs/visualize-data-studio) and [machine learning algorithms](https://cloud.google.com/bigquery-ml/docs/bigqueryml-web-ui-start). Both of these capabilities are things that I want to eventually learn without paying for visualisation softwares like Tableau (sadly, I am no longer a student to qualify for their free accounts). 
+
+
+# (Optional) Running a BigQuery query in the command line {#bq_command}
+
+*(Note: to use BigQuery, you will need to have a Google Cloud account and enable billing for a project, this might cost you, but luckily Google Cloud offers free credits when you sign up.)*
+
+The two most common ways of making queries are: 
+
+1. [Going through the Google Cloud Console and use the WebUI](https://cloud.google.com/bigquery/docs/quickstarts/quickstart-web-ui)
+
+1. [Command line](https://cloud.google.com/bigquery/docs/quickstarts/quickstart-command-line)
+
+
+I will show you a quick demo of how to run a simple query in the command line. But I do find the web UI option incredibly useful. I can see myself using web UI on the go if I have some urgent data questions while riding on a bus to work (totally normal behaviour based on my past experiences).
+
+BigQuery has a set of [public datasets](https://cloud.google.com/bigquery/public-data), including one for [COVID-19](https://console.cloud.google.com/marketplace/details/bigquery-public-datasets/covid19-dataset-list?preview=bigquery-public-datasets). The [Johns Hopkins University dataset](https://console.cloud.google.com/marketplace/details/johnshopkins/covid19_jhu_global_cases) is also part of this collection, and at the time of writing this article, this dataset is small enough for demostration purposes.
+
+In command line, tying 
+
+```
+bq show bigquery-public-data:covid19_jhu_csse.summary
+```
+
+
+
+gives the output 
+```
+Table bigquery-public-data:covid19_jhu_csse.summary
+
+   Last modified              Schema              Total Rows   Total Bytes   Expiration   Time Partitioning   Clustered Fields      Labels     
+ ----------------- ----------------------------- ------------ ------------- ------------ ------------------- ------------------ -------------- 
+  02 Apr 19:06:19   |- province_state: string     41129        5564578                                                           freebqcovid:  
+                    |- country_region: string                                                                                                  
+                    |- date: date                                                                                                              
+                    |- latitude: float                                                                                                         
+                    |- longitude: float                                                                                                        
+                    |- location_geom: geography                                                                                                
+                    |- confirmed: integer                                                                                                      
+                    |- deaths: integer                                                                                                         
+                    |- recovered: integer                                                                                                      
+                    |- active: integer                                                                                                         
+                    |- fips: string                                                                                                            
+                    |- admin2: string                                                                                                          
+                    |- combined_key: string   
+```
+
+Here, `bigquery-public-data` is the name of the BigQuery project that hosts the COVID-19 data. The name of the data stored in that project is `covid19_jhu_csse.summary`. And you can see that the output of `bq show` gives the specifications of all the columns in this data. 
+
+To make a normal SQL query, you can use 
+```
+bq query --use_legacy_sql=false \
+'SELECT *
+FROM `bigquery-public-data.covid19_jhu_csse.summary`
+LIMIT 10;'
+```
+
+which gives the output
+
+```
+Waiting on bqjob_r28ad9889c4311223_0000017139f7f30c_1 ... (0s) Current status: DONE   
++----------------+----------------------+------------+----------+-----------+---------------+-----------+--------+-----------+--------+------+--------+--------------+
+| province_state |    country_region    |    date    | latitude | longitude | location_geom | confirmed | deaths | recovered | active | fips | admin2 | combined_key |
++----------------+----------------------+------------+----------+-----------+---------------+-----------+--------+-----------+--------+------+--------+--------------+
+| NULL           | United Arab Emirates | 2020-02-13 |     NULL |      NULL |          NULL |         8 |      0 |         1 |   NULL | NULL | NULL   | NULL         |
+| NULL           | Thailand             | 2020-02-22 |     NULL |      NULL |          NULL |        35 |      0 |        17 |   NULL | NULL | NULL   | NULL         |
+| NULL           | Vietnam              | 2020-01-24 |     NULL |      NULL |          NULL |         2 |   NULL |      NULL |   NULL | NULL | NULL   | NULL         |
+| NULL           | Malaysia             | 2020-02-17 |     NULL |      NULL |          NULL |        22 |      0 |         7 |   NULL | NULL | NULL   | NULL         |
+| NULL           | Finland              | 2020-02-25 |     NULL |      NULL |          NULL |         1 |      0 |         1 |   NULL | NULL | NULL   | NULL         |
+| NULL           | Vietnam              | 2020-02-21 |     NULL |      NULL |          NULL |        16 |      0 |        14 |   NULL | NULL | NULL   | NULL         |
+| NULL           | UK                   | 2020-02-17 |     NULL |      NULL |          NULL |         9 |      0 |         8 |   NULL | NULL | NULL   | NULL         |
+| NULL           | Nepal                | 2020-02-21 |     NULL |      NULL |          NULL |         1 |      0 |         1 |   NULL | NULL | NULL   | NULL         |
+| NULL           | San Marino           | 2020-02-27 |     NULL |      NULL |          NULL |         1 |      0 |         0 |   NULL | NULL | NULL   | NULL         |
+| NULL           | Thailand             | 2020-01-31 |     NULL |      NULL |          NULL |        19 |   NULL |         5 |   NULL | NULL | NULL   | NULL         |
++----------------+----------------------+------------+----------+-----------+---------------+-----------+--------+-----------+--------+------+--------+--------------+
+```
+
+Not bad! But let's try to do this in `R`. 
+
+
+
+# Connecting to BigQuery using `DBI` {#main}
+
+The `DBI` (DataBaseInterface) package provides an important function, `dbconnect`, which facilitates the connection to [various databases](https://db.rstudio.com/databases). The most important argument in `dbconnect()` is `drv`, which specifies the driver that is necessary to connect to a database. The extra arguments in this case are related to Google's way of setting up a Google Cloud projects and billing:
+  + `project = "bigquery-public-data"` sets which project the data is at, in this case, it is at the project managed by Google called "bigquery-public-data".
+  + `dataset = "covid19_jhu_csse"` refers to the dataset (consiste of multiple tables) stored in the project.
+  + `billing = "your_project_name"` refers to billing account that you have with Google. Since you are making queries to databases, which takes up computational resources, which are not free, so you will need an Google Cloud account and your own project so Google will charge you. Mine is called "scpworkshop". 
+
+```{r}
+library(DBI)
+library(bigrquery)
+
+con <- dbConnect(
+  drv = bigrquery::bigquery(),
+  project = "bigquery-public-data",
+  dataset = "covid19_jhu_csse",
+  billing = "scpworkshop"
+)
+```
+
+We can list all the tables in the dataset using the `dbListTables` function. 
+
+```{r}
+dbListTables(con) ## List all tables in this connection
+```
+
+Once we decide which table we wish to work on, in this case, the summary table, we can check on the column types of this table first before making the query. The reason that I prefer to check the column types first is because I keep finding a parsing error with the latest version of the `bigrquery` package, which I have fixed [here](https://github.com/kevinwang09/bigrquery/tree/geography). If you want to follow the example below, please install my updated package using `devtools::install_github("kevinwang09/bigrquery", ref = "geography")`. 
+
+```{r}
+bigrquery::bq_table_fields("bigquery-public-data.covid19_jhu_csse.summary") ## List field types 
+
+DBI::dbGetQuery(con, 
+"SELECT *
+FROM `bigquery-public-data.covid19_jhu_csse.summary`
+LIMIT 10;")
+```
+
+
+# Comparing the syntax style of `dplyr` and `SQL`
+
+Suppose we want to check the total confirmed (the columns are already in cumulative confirmed cases) COVID19 cases for Italy and Spain, then in SQL, we can make the following query:
+
+```{r}
+sql_tbl = DBI::dbGetQuery(con, 
+"SELECT country_region, confirmed
+FROM `bigquery-public-data.covid19_jhu_csse.summary`
+WHERE country_region IN ('Italy', 'Spain') AND date = '2020-04-02'
+")
+
+sql_tbl
+```
+
+
+Looks good! 
+
+But what about `dplyr`?
+
+```{r}
+library(dplyr)
+
+covid_data = tbl(con, "summary") 
+
+dplyr_tbl = covid_data %>% 
+  dplyr::filter(country_region %in% c('Italy', 'Spain'), date == '2020-04-02') %>% 
+  dplyr::select(country_region, confirmed) %>% 
+  collect() ## collect() pulls the entire table into memory
+
+dplyr_tbl
+```
+
+But are the results the same?
+
+```{r}
+all.equal(sql_tbl, dplyr_tbl)
+```
+
+
+Awesome!
+
+
+We can see that both `dplyr` verbs and SQL in this query are very similar which is great for data scientist to translate between the two. 
+
+
+
+## A more complicated query
+
+You might be asking why I didn't put US and China in the query, well, this is because that both countries has state/province level data, so the total confirmed caes will need to be summed across the state/province level first before being compared to other data at the country level. 
+
+Combine this subuery with the previous query, we get: 
+
+```{r}
+sql_tbl = DBI::dbGetQuery(con, 
+"SELECT country_region, SUM(confirmed) AS country_confirmed
+FROM `bigquery-public-data.covid19_jhu_csse.summary`
+WHERE country_region IN ('Italy', 'Spain', 'US', 'China') AND date = '2020-04-02'
+GROUP BY country_region
+ORDER BY country_confirmed;
+")
+
+sql_tbl
+```
+
+Not bad! The `UNION ALL` took care a lot of the hard work!
+
+
+In `dplyr`, the job is (I would argue) simpler:
+
+```{r}
+dplyr_tbl = covid_data %>% 
+  filter(country_region %in% c('Italy', 'Spain', 'US', 'China'), date == '2020-04-02') %>% 
+  group_by(country_region) %>% 
+  summarise(country_confirmed = sum(confirmed)) %>% 
+  arrange(country_confirmed) %>% 
+  collect()
+
+dplyr_tbl
+
+all.equal(sql_tbl, dplyr_tbl)
+```
+
+
+
+
+## Which is better? 
+
+Very much up to your personal taste!
+
+I personally prefer `dplyr` because I think its design is more intuitive:
+
+  + the grouping variable is automatically included in the final output, without using extra selection of columns
+    
+  + the operation of selecting columns and summarising columns are two distinct verbs in `dplyr`, whereas in SQL it is just `SELECT`
+    
+
+
+<style>
+pre {
+  overflow-x: auto;
+}
+pre code {
+  word-wrap: normal;
+  white-space: pre;
+}
+</style>

@@ -1,0 +1,4 @@
+[submodule "public"]
+	path = public
+	url = https://github.com/kevinwang09/kevinwang09.github.io.git
+	branch = master

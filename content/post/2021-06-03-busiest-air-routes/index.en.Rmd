@@ -1,0 +1,174 @@
+---
+title: Busiest air routes
+author: Kevin Wang
+date: '2021-06-03'
+slug: busiest-air-routes
+categories:
+  - DataVisualisation
+tags: []
+subtitle: ''
+summary: ''
+authors: []
+lastmod: '2021-06-03T17:22:58+10:00'
+featured: no
+image:
+  caption: ''
+  focal_point: ''
+  preview_only: no
+projects: []
+---
+
+# Introduction
+
+This is a simple exercise to extract data from a Wikipedia page ([List of busiest passenger air routes](https://en.wikipedia.org/wiki/List_of_busiest_passenger_air_routes)) and performing a basic data visualisation. 
+
+Why am I doing this? I somehow really got into aviation in the past 2 years. Due to the COVID travel restriction, I have spent days on YouTube watching planes taking off and landing. In a moment of self-indulgence, I would also like to add that Airbus 380 is such a beautiful engineering marvel and it is sad that COVID fastened the end of its production.
+
+![](HK-qantas.jpg)
+
+*Airbus 380 at Hong Kong airport, 2018*
+
+
+
+# Extracting data
+
+We can, in theory, copy and paste the data to an Excel sheet and then import the data. However, we will try to do something a bit fancier and use the `rvest` package to extract this data.
+
+The only downside with extracting the data in this way is that if the webpage is updated, then our code might not work. Hence, I will also save a copy of this data in my [GitHub](https://gist.github.com/kevinwang09/cfbb5bcbc73f6d8970fa4499f2cc0621). 
+
+```{r}
+suppressPackageStartupMessages({
+  library(xml2)
+  library(rvest)
+  library(tidyverse)
+})
+```
+ 
+```{r}
+webpage = xml2::read_html("https://en.wikipedia.org/wiki/List_of_busiest_passenger_air_routes")
+
+raw_tbl = webpage %>% 
+  html_element("table") %>% 
+  html_table()
+
+raw_tbl
+
+## We are only interested in the 2018 passenger numbers
+subset_tbl = raw_tbl %>% 
+  dplyr::transmute(
+    rank = Rank, 
+    airport1 = `Airport 1`, 
+    airport2 = `Airport 2`, 
+    distance = `Distance (km)`, 
+    passengers = `2018[1]` %>% str_remove_all(",") %>% as.integer(), 
+    type = Type)
+
+subset_tbl
+
+write_csv(x = subset_tbl, file = "raw_airports_data.csv")
+```
+
+Notice that most of the "airports" are actually just the name of the city. We will use this to grab the longitude and latitude information. However, there are some exceptions like "Tokyo-Haneda", where "Haneda" is one of the two international airports in the city of Tokyo. We will need to clean up these exceptions for consistency. 
+
+```{r}
+clean_tbl = subset_tbl %>% 
+  dplyr::mutate(
+    city1 = purrr::map_chr(.x = airport1,
+                       .f = ~ str_split(.x, "-")[[1]][1]),
+    city2 = purrr::map_chr(.x = airport2,
+                       .f = ~ str_split(.x, "-")[[1]][1]))
+
+clean_tbl
+```
+
+
+# Getting locations for the cities
+
+
+## Google Maps API
+There are many ways of getting the location information for cities. In the past, I have found the most reliable way is to get it through `ggmap` which uses the Google Maps API, but this means you must set up a Google Cloud Platform billing account with them (which unfortunately requires a credit card). See [this documentation](https://cran.r-project.org/web/packages/ggmap/readme/README.html). Once a project is set up with the Google Cloud Platform, you will then need to enable the Google Maps API by searching for it in the top search bar. The API key is required too, see the documentations for `ggmap::register_google` for more information. 
+
+Aside: is all these worth it? In my experience, absolutely! Because Google Maps is very smart and tends to understand certain complexities that you didn't think of and handle those for you. For example, if you are interested in the city of Sydney, Google Maps will understand that to be the city of Sydney in Australia, not the city in Nova Scotia, Canada (I don't know how they do this, but my guess is that they will return results that are more relevant, because, well, they are Google). Google Cloud is also offering free credits for most of their basic services, so one can take advantage of these without incurring substantial costs. 
+
+To ensure code reproducibility, I will use the code below to download the coordinates for all the cities, save it as a CSV and make it available on [GitHub](https://gist.github.com/kevinwang09/006d00ee7a43778171e7fc2fd409cdd6).
+
+```{r, eval = FALSE}
+library(ggmap)
+# ggmap::geocode("Sydney, Australia", output = "latlon", source = "google")
+all_cities = c(clean_tbl$city1, clean_tbl$city2) %>% unique
+all_geocode = ggmap::geocode(location = all_cities, output = "latlon")
+city_tbl = tibble(
+  city = all_cities,
+  lon = all_geocode$lon,
+  lat = all_geocode$lat)
+
+readr::write_csv(x = city_tbl, file = "./city_tbl.csv")
+```
+
+Alternatively, if you don't want to register for Google's billings, you could use the `tidygeocoder`'s `geocode` function to get the latitude/longitude information via Open Street Map, which doesn't require registration, but in my experience, it can be slower than Google Maps.
+
+## `tidygeocoder` location extractions
+
+A small example: 
+
+```{r, eval = FALSE}
+city_tbl = tibble(
+  city = c(clean_tbl$city1, clean_tbl$city2) %>% unique) %>% 
+  tidygeocoder::geocode(city, method = 'osm', lat = latitude , long = longitude)
+```
+
+## Simple maps location extractions
+
+You could also use the data provided in https://simplemaps.com/data/world-cities to perform data joins to get the location information. The downloaded data looks quite tidy with additional ASCII encoding and I was quite impressed with the quality of the data. 
+
+# Joining data and visualise
+
+Once we have the location information we can simply join the data as followed: 
+
+```{r}
+city_tbl = readr::read_csv(file = "https://gist.githubusercontent.com/kevinwang09/006d00ee7a43778171e7fc2fd409cdd6/raw/f12ec9deecdd99b093d0c819e21b125a7f7d4afd/city_tbl.csv")
+
+joined_data = clean_tbl %>% 
+  left_join(city_tbl, by = c("city1" = "city")) %>% 
+  left_join(city_tbl, by = c("city2" = "city"), suffix = c("1", "2"))
+```
+
+I really like `plotly`'s globe visualisation, because you can click and drag the globe, which is really nice. 
+
+Using this visualisation, we can see most of the busiest routes in the world are concentrated around Asia. What surprised me a few years ago is that Australia, despite its small population, also had a couple of routes made it to this list, with Sydney - Melbourne being the third on the list. In my experience, on a good day, there could be two planes at the Sydney airport flying to Melbourne but only 10 minutes apart. Which I must admit was a rare luxury that I never realised. 
+
+```{r, warning=FALSE}
+library(plotly)
+
+geo <- list(
+  scope = 'world',
+  projection = list(type = 'orthographic'),
+  showland = TRUE,
+  landcolor = toRGB("gray95"),
+  countrycolor = toRGB("gray80")
+)
+
+fig <- plot_geo(color = I("red"))
+
+fig <- fig %>% 
+  add_markers(
+    data = joined_data, x = ~lon1, y = ~lat1, text = ~city1,
+    hoverinfo = "text", alpha = 0.5) %>% 
+  add_markers(
+    data = joined_data, x = ~lon2, y = ~lat2, text = ~city2,
+    hoverinfo = "text", alpha = 0.5) %>% 
+  add_segments(
+    data = group_by(joined_data, rank),
+    x = ~lon1, xend = ~lon2,
+    y = ~lat1, yend = ~lat2,
+    alpha = 0.3, size = I(1), 
+    hoverinfo = "none") %>% 
+  layout(
+    title = 'Busiest air routes in the world',
+    geo = geo, 
+    showlegend = FALSE, 
+    height = 800)
+
+fig
+```
+
