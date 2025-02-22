@@ -1,5 +1,5 @@
 ---
-bio: Senior Data scientist at Illumina. PhD in Statistics..
+bio: Senior Data scientist at Illumina. PhD in Statistics.
 education:
   courses:
   - course: PhD in Statistics and Bioinformatics
